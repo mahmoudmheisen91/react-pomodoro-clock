@@ -1,6 +1,6 @@
 {
-  "short_name": " ReactPomodoroTimer",
-  "name": "React Pomodoro Timer",
+  "short_name": " ReactPomodoroClock",
+  "name": "React Pomodoro Clock",
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",
