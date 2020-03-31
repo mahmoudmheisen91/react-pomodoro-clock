@@ -1,5 +1,7 @@
 {
   "name": "react-pomodoro-clock",
+  "description": "Tomato timer using React, done for FCC course 3, Project 5",
+  "author": "Mahmoud Mheisen",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -30,5 +32,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mahmoudmheisen91/react-pomodoro-clock"
   }
 }
