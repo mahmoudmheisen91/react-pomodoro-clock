@@ -2,7 +2,7 @@ import React from "react";
 
 let ControlComp = props => {
   return (
-    <div className={props.controlClass}>
+    <div className={props.controlClass + " control"}>
       <div id={props.id}>{props.text}</div>
       <div id={props.valueID}>{props.value}</div>
       <button id={props.btn1ID}>
@@ -17,16 +17,18 @@ let ControlComp = props => {
 
 let DisplayComp = props => {
   return (
-    <div id="display">
+    <div className="display">
       <div id={"timer-label"}>{"Session"}</div>
       <div id={"time-left"}>{props.timeLeft}</div>
-      <button id={"start_stop"}>
-        <i class="fas fa-play-circle fa-2x icon"></i>
-        <i class="fas fa-pause-circle fa-2x icon"></i>
-      </button>
-      <button id={"reset"}>
-        <i className="fas fa-undo fa-2x icon"></i>
-      </button>
+      <div className="disp-btn">
+        <button id={"start_stop"}>
+          <i class="fas fa-play-circle fa-2x icon"></i>
+          {/* <i class="fas fa-pause-circle fa-2x icon"></i> */}
+        </button>
+        <button id={"reset"}>
+          <i className="fas fa-undo fa-2x icon"></i>
+        </button>
+      </div>
     </div>
   );
 };
@@ -39,7 +41,7 @@ class PomodoroComp extends React.Component {
 
   render() {
     return (
-      <div>
+      <div id="pomodoro">
         <ControlComp
           controlClass={"BreakControl"}
           id={"break-label"}
@@ -51,6 +53,9 @@ class PomodoroComp extends React.Component {
           btn1Text={"+inc"}
           btn2Text={"-dec"}
         />
+
+        <DisplayComp timeLeft={"00:00"} />
+
         <ControlComp
           controlClass={"SessionControl"}
           id={"session-label"}
@@ -62,7 +67,6 @@ class PomodoroComp extends React.Component {
           btn1Text={"+inc"}
           btn2Text={"-dec"}
         />
-        <DisplayComp timeLeft={"00:00"} />
       </div>
     );
   }
