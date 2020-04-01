@@ -1,19 +1,47 @@
 import React from "react";
 
-let ControlComp = props => {
-  return (
-    <div className={props.controlClass + " control"}>
-      <div id={props.id}>{props.text}</div>
-      <div id={props.valueID}>{props.value}</div>
-      <button id={props.btn1ID}>
-        <i className="fas fa-arrow-alt-circle-up fa-2x icon"></i>
-      </button>
-      <button id={props.btn2ID}>
-        <i className="fas fa-arrow-alt-circle-down fa-2x icon"></i>
-      </button>
-    </div>
-  );
-};
+class ControlComp extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      counter: this.props.value
+    };
+
+    this.increment = this.increment.bind(this);
+    this.decrement = this.decrement.bind(this);
+  }
+
+  increment() {
+    if (!(this.state.counter >= 60)) {
+      this.setState(state => ({
+        counter: state.counter++
+      }));
+    }
+  }
+
+  decrement() {
+    if (!(this.state.counter <= 0)) {
+      this.setState(state => ({
+        counter: state.counter--
+      }));
+    }
+  }
+
+  render() {
+    return (
+      <div className={this.props.controlClass + " control"}>
+        <div id={this.props.id}>{this.props.text}</div>
+        <div id={this.props.valueID}>{this.state.counter}</div>
+        <button onClick={this.increment} id={this.props.btn1ID}>
+          <i className="fas fa-arrow-alt-circle-up fa-2x icon"></i>
+        </button>
+        <button onClick={this.decrement} id={this.props.btn2ID}>
+          <i className="fas fa-arrow-alt-circle-down fa-2x icon"></i>
+        </button>
+      </div>
+    );
+  }
+}
 
 let DisplayComp = props => {
   return (
