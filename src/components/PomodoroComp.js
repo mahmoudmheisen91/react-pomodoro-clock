@@ -11,7 +11,9 @@ class DisplayComp extends React.Component {
 
   togglePlay() {}
 
-  reset() {}
+  reset() {
+    this.props.reset();
+  }
 
   render() {
     return (
@@ -37,11 +39,16 @@ class PomodoroComp extends React.Component {
     super(props);
     this.state = {
       minLeft: 25,
-      secLeft: 0
+      secLeft: 0,
+      sessValue: 25,
+      brkValue: 5,
+      reset: false
     };
 
     this.timeleftString = this.timeleftString.bind(this);
     this.getTime = this.getTime.bind(this);
+    this.reset = this.reset.bind(this);
+    this.resetBack = this.resetBack.bind(this);
   }
 
   timeleftString() {
@@ -61,6 +68,21 @@ class PomodoroComp extends React.Component {
     }
   }
 
+  reset() {
+    this.setState({
+      minLeft: 25,
+      sessValue: 25,
+      brkValue: 5,
+      reset: true
+    });
+  }
+
+  resetBack() {
+    this.setState({
+      reset: false
+    });
+  }
+
   render() {
     return (
       <div id="pomodoro">
@@ -69,7 +91,9 @@ class PomodoroComp extends React.Component {
           id={"break-label"}
           text={"Break Length"}
           valueID={"break-length"}
-          value={5}
+          value={this.state.brkValue}
+          reset={this.state.reset}
+          resetBack={this.resetBack}
           type={"B"}
           getTime={this.getTime}
           btn1ID={"break-increment"}
@@ -78,14 +102,16 @@ class PomodoroComp extends React.Component {
           btn2Text={"-dec"}
         />
 
-        <DisplayComp timeLeft={this.timeleftString()} />
+        <DisplayComp timeLeft={this.timeleftString()} reset={this.reset} />
 
         <ControlComp
           controlClass={"SessionControl"}
           id={"session-label"}
           text={"Session Length"}
           valueID={"session-length"}
-          value={25}
+          value={this.state.sessValue}
+          reset={this.state.reset}
+          resetBack={this.resetBack}
           type={"S"}
           getTime={this.getTime}
           btn1ID={"session-increment"}

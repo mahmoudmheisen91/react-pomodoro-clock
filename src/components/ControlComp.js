@@ -11,6 +11,15 @@ class ControlComp extends React.Component {
     this.decrement = this.decrement.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.reset) {
+      this.setState({
+        counter: nextProps.value
+      });
+      nextProps.resetBack();
+    }
+  }
+
   increment() {
     if (!(this.state.counter >= 60)) {
       this.setState(state => ({
