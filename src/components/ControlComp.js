@@ -34,7 +34,7 @@ class ControlComp extends React.Component {
   }
 
   decrement() {
-    if (!(this.state.counter <= 0)) {
+    if (!(this.state.counter <= 1)) {
       this.setState(state => ({
         counter: state.counter--
       }));
