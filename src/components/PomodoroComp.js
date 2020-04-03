@@ -1,38 +1,6 @@
 import React from "react";
 import ControlComp from "./ControlComp";
-
-class DisplayComp extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-    this.togglePlay = this.togglePlay.bind(this);
-    this.reset = this.reset.bind(this);
-  }
-
-  togglePlay() {}
-
-  reset() {
-    this.props.reset();
-  }
-
-  render() {
-    return (
-      <div className="display">
-        <div id={"timer-label"}>{"Session"}</div>
-        <div id={"time-left"}>{this.props.timeLeft}</div>
-        <div className="disp-btn">
-          <button onClick={this.togglePlay} id={"start_stop"}>
-            <i class="fas fa-play-circle fa-2x icon"></i>
-            {/* <i class="fas fa-pause-circle fa-2x icon"></i> */}
-          </button>
-          <button onClick={this.reset} id={"reset"}>
-            <i className="fas fa-undo fa-2x icon"></i>
-          </button>
-        </div>
-      </div>
-    );
-  }
-}
+import DisplayComp from "./DisplayComp";
 
 class PomodoroComp extends React.Component {
   constructor(props) {
@@ -42,16 +10,24 @@ class PomodoroComp extends React.Component {
       secLeft: 0,
       sessValue: 25,
       brkValue: 5,
-      reset: false
+      reset: false,
+      play: false,
+      pause: false,
+      session: true,
+      displayText: "Session",
+      idVar: "",
     };
 
-    this.timeleftString = this.timeleftString.bind(this);
+    this.timeLeftString = this.timeLeftString.bind(this);
     this.getTime = this.getTime.bind(this);
+    this.togglePlay = this.togglePlay.bind(this);
     this.reset = this.reset.bind(this);
     this.resetBack = this.resetBack.bind(this);
+    this.startTimer = this.startTimer.bind(this);
+    this.stopTimer = this.stopTimer.bind(this);
   }
 
-  timeleftString() {
+  timeLeftString() {
     let min =
       this.state.minLeft < 10 ? "0" + this.state.minLeft : this.state.minLeft;
     let sec =
@@ -63,23 +39,117 @@ class PomodoroComp extends React.Component {
   getTime(timeLeft) {
     if (timeLeft.type === "S") {
       this.setState({
-        minLeft: timeLeft.time
+        minLeft: timeLeft.time,
+        secLeft: 0,
+        sessValue: timeLeft.time,
+      });
+    } else if (timeLeft.type === "B") {
+      this.setState({
+        brkValue: timeLeft.time,
       });
     }
+  }
+
+  togglePlay() {
+    if (!this.state.play) {
+      this.startTimer();
+      this.setState({
+        play: true,
+      });
+    } else {
+      this.stopTimer();
+      this.setState({
+        play: false,
+      });
+    }
+  }
+
+  startTimer() {
+    let sec = this.state.secLeft;
+    let min = this.state.minLeft;
+    if (!this.state.pause) {
+      if (!this.state.session) {
+        min = this.state.brkValue;
+      } else {
+        min = this.state.sessValue;
+      }
+    } else {
+      min = this.state.minLeft;
+    }
+
+    // if (sec === 0) {
+    //   sec = 60;
+    //   min--;
+    // }
+
+    this.setState({
+      idVar: setInterval(() => {
+        if (sec === 0) {
+          sec = 60;
+          min--;
+        }
+        sec--;
+        if (sec <= 0 && min <= 0) {
+          //   this.stopTimer();
+
+          this.setState((state) => ({
+            secLeft: 0,
+            minLeft: 0,
+            session: !state.session,
+          }));
+          //sec = 60;
+          if (!this.state.session) {
+            min = this.state.brkValue;
+            this.setState((state) => ({
+              displayText: "Break",
+            }));
+          } else {
+            min = this.state.sessValue;
+            this.setState((state) => ({
+              displayText: "Session",
+            }));
+          }
+        } else {
+          // if (sec === 0) {
+          //   sec = 60;
+          //   min--;
+          // }
+
+          this.setState({
+            secLeft: sec,
+            minLeft: min,
+          });
+        }
+      }, 1000),
+    });
+  }
+
+  stopTimer() {
+    clearInterval(this.state.idVar);
+    this.setState((state) => ({
+      pause: true,
+    }));
   }
 
   reset() {
     this.setState({
       minLeft: 25,
+      secLeft: 0,
       sessValue: 25,
       brkValue: 5,
-      reset: true
+      reset: true,
+      displayText: "Session",
+      idVar: "",
+      pause: false,
+      play: false,
+      session: true,
     });
+    this.stopTimer();
   }
 
   resetBack() {
     this.setState({
-      reset: false
+      reset: false,
     });
   }
 
@@ -98,11 +168,15 @@ class PomodoroComp extends React.Component {
           getTime={this.getTime}
           btn1ID={"break-increment"}
           btn2ID={"break-decrement"}
-          btn1Text={"+inc"}
-          btn2Text={"-dec"}
+          running={this.state.play}
         />
 
-        <DisplayComp timeLeft={this.timeleftString()} reset={this.reset} />
+        <DisplayComp
+          timeLeft={this.timeLeftString()}
+          reset={this.reset}
+          togglePlay={this.togglePlay}
+          displayText={this.state.displayText}
+        />
 
         <ControlComp
           controlClass={"SessionControl"}
@@ -116,8 +190,7 @@ class PomodoroComp extends React.Component {
           getTime={this.getTime}
           btn1ID={"session-increment"}
           btn2ID={"session-decrement"}
-          btn1Text={"+inc"}
-          btn2Text={"-dec"}
+          running={this.state.play}
         />
       </div>
     );

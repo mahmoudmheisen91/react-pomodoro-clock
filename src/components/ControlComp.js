@@ -21,6 +21,7 @@ class ControlComp extends React.Component {
   }
 
   increment() {
+    // if (!this.props.running) {
     if (!(this.state.counter >= 60)) {
       this.setState(state => ({
         counter: state.counter++
@@ -31,9 +32,11 @@ class ControlComp extends React.Component {
         time: this.state.counter + 1
       });
     }
+    // }
   }
 
   decrement() {
+    // if (!this.props.running) {
     if (!(this.state.counter <= 1)) {
       this.setState(state => ({
         counter: state.counter--
@@ -44,6 +47,7 @@ class ControlComp extends React.Component {
         time: this.state.counter - 1
       });
     }
+    // }
   }
 
   render() {
