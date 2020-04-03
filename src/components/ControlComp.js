@@ -4,7 +4,7 @@ class ControlComp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      counter: this.props.value
+      counter: this.props.value,
     };
 
     this.increment = this.increment.bind(this);
@@ -14,40 +14,36 @@ class ControlComp extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.reset) {
       this.setState({
-        counter: nextProps.value
+        counter: nextProps.value,
       });
       nextProps.resetBack();
     }
   }
 
   increment() {
-    // if (!this.props.running) {
     if (!(this.state.counter >= 60)) {
-      this.setState(state => ({
-        counter: state.counter++
+      this.setState((state) => ({
+        counter: state.counter++,
       }));
 
       this.props.getTime({
         type: this.props.type,
-        time: this.state.counter + 1
+        time: this.state.counter + 1,
       });
     }
-    // }
   }
 
   decrement() {
-    // if (!this.props.running) {
     if (!(this.state.counter <= 1)) {
-      this.setState(state => ({
-        counter: state.counter--
+      this.setState((state) => ({
+        counter: state.counter--,
       }));
 
       this.props.getTime({
         type: this.props.type,
-        time: this.state.counter - 1
+        time: this.state.counter - 1,
       });
     }
-    // }
   }
 
   render() {
