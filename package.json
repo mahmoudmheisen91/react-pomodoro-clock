@@ -1,4 +1,5 @@
 {
+  "homepage": "https://mahmoudmheisen91.github.io/react-pomodoro-clock",
   "name": "react-pomodoro-clock",
   "description": "Tomato timer using React, done for FCC course 3, Project 5",
   "author": "Mahmoud Mheisen",
@@ -13,6 +14,8 @@
     "react-scripts": "3.4.1"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -36,5 +39,8 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/mahmoudmheisen91/react-pomodoro-clock"
+  },
+  "devDependencies": {
+    "gh-pages": "^2.2.0"
   }
 }
