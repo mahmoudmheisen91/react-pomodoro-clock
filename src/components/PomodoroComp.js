@@ -16,6 +16,7 @@ class PomodoroComp extends React.Component {
       session: true,
       displayText: "Session",
       idVar: "",
+      flipped: false,
     };
 
     this.timeLeftString = this.timeLeftString.bind(this);
@@ -73,9 +74,10 @@ class PomodoroComp extends React.Component {
       } else {
         min = this.state.sessValue;
       }
-    } else {
-      min = this.state.minLeft;
     }
+    // } else {
+    //   min = this.state.minLeft;
+    // }
 
     // if (sec === 0) {
     //   sec = 60;
@@ -84,11 +86,17 @@ class PomodoroComp extends React.Component {
 
     this.setState({
       idVar: setInterval(() => {
-        if (sec === 0) {
-          sec = 60;
-          min--;
+        if (!this.state.flipped) {
+          if (sec === 0) {
+            sec = 60;
+            min--;
+          }
+          sec--;
+        } else {
+          this.setState((state) => ({
+            flipped: false,
+          }));
         }
-        sec--;
         if (sec <= 0 && min <= 0) {
           //   this.stopTimer();
 
@@ -96,6 +104,7 @@ class PomodoroComp extends React.Component {
             secLeft: 0,
             minLeft: 0,
             session: !state.session,
+            flipped: true,
           }));
           //sec = 60;
           if (!this.state.session) {
