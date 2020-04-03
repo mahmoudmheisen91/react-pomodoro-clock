@@ -77,14 +77,6 @@ class PomodoroComp extends React.Component {
         min = this.state.sessValue;
       }
     }
-    // } else {
-    //   min = this.state.minLeft;
-    // }
-
-    // if (sec === 0) {
-    //   sec = 60;
-    //   min--;
-    // }
 
     this.setState({
       idVar: setInterval(() => {
@@ -100,15 +92,13 @@ class PomodoroComp extends React.Component {
           }));
         }
         if (sec <= 0 && min <= 0) {
-          //   this.stopTimer();
-
           this.setState((state) => ({
             secLeft: 0,
             minLeft: 0,
             session: !state.session,
             flipped: true,
           }));
-          //sec = 60;
+
           if (!this.state.session) {
             min = this.state.brkValue;
             this.setState((state) => ({
@@ -122,11 +112,6 @@ class PomodoroComp extends React.Component {
           }
           this.playSound();
         } else {
-          // if (sec === 0) {
-          //   sec = 60;
-          //   min--;
-          // }
-
           this.setState({
             secLeft: sec,
             minLeft: min,
@@ -175,7 +160,6 @@ class PomodoroComp extends React.Component {
 
   rewind() {
     let sound = document.getElementById("beep");
-    // sound.volume = this.props.volume;
     sound.pause();
     sound.currentTime = 0;
   }
@@ -201,6 +185,7 @@ class PomodoroComp extends React.Component {
         <DisplayComp
           timeLeft={this.timeLeftString()}
           reset={this.reset}
+          pause={this.state.play}
           togglePlay={this.togglePlay}
           displayText={this.state.displayText}
         />

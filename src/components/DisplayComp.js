@@ -23,8 +23,11 @@ class DisplayComp extends React.Component {
         <div id={"time-left"}>{this.props.timeLeft}</div>
         <div className="disp-btn">
           <button onClick={this.togglePlay} id={"start_stop"}>
-            <i class="fas fa-play-circle fa-2x icon"></i>
-            {/* <i class="fas fa-pause-circle fa-2x icon"></i> */}
+            {!this.props.pause ? (
+              <i class="fas fa-play-circle fa-2x icon"></i>
+            ) : (
+              <i class="fas fa-pause-circle fa-2x icon"></i>
+            )}
           </button>
           <button onClick={this.reset} id={"reset"}>
             <i className="fas fa-undo fa-2x icon"></i>
