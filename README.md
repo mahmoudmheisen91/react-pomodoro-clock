@@ -1,3 +1,9 @@
+React App for FCC Course 3, Front End Libraries
+
+Click this link to direct: https://mahmoudmheisen91.github.io/react-pomodoro-clock/
+
+Done for FCC :)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
