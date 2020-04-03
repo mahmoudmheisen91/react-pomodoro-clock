@@ -26,6 +26,8 @@ class PomodoroComp extends React.Component {
     this.resetBack = this.resetBack.bind(this);
     this.startTimer = this.startTimer.bind(this);
     this.stopTimer = this.stopTimer.bind(this);
+    this.playSound = this.playSound.bind(this);
+    this.rewind = this.rewind.bind(this);
   }
 
   timeLeftString() {
@@ -118,6 +120,7 @@ class PomodoroComp extends React.Component {
               displayText: "Session",
             }));
           }
+          this.playSound();
         } else {
           // if (sec === 0) {
           //   sec = 60;
@@ -154,12 +157,27 @@ class PomodoroComp extends React.Component {
       session: true,
     });
     this.stopTimer();
+    this.rewind();
   }
 
   resetBack() {
     this.setState({
       reset: false,
     });
+  }
+
+  playSound() {
+    let sound = document.getElementById("beep");
+    // sound.volume = this.props.volume;
+    sound.currentTime = 0;
+    sound.play();
+  }
+
+  rewind() {
+    let sound = document.getElementById("beep");
+    // sound.volume = this.props.volume;
+    sound.pause();
+    sound.currentTime = 0;
   }
 
   render() {
@@ -201,6 +219,12 @@ class PomodoroComp extends React.Component {
           btn2ID={"session-decrement"}
           running={this.state.play}
         />
+        <audio
+          id={"beep"}
+          src={
+            "http://research.spa.aalto.fi/publications/papers/dafx13-impact/sounds/out_L.wav"
+          }
+        ></audio>
       </div>
     );
   }
