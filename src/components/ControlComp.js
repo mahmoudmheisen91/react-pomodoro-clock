@@ -23,7 +23,7 @@ class ControlComp extends React.Component {
   increment() {
     if (!(this.state.counter >= 60)) {
       this.setState((state) => ({
-        counter: state.counter++,
+        counter: state.counter + 1,
       }));
 
       this.props.getTime({
@@ -36,7 +36,7 @@ class ControlComp extends React.Component {
   decrement() {
     if (!(this.state.counter <= 1)) {
       this.setState((state) => ({
-        counter: state.counter--,
+        counter: state.counter - 1,
       }));
 
       this.props.getTime({
